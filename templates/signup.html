@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Signup Page</title>
+        <link type="text/css" href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet"/>
+        <script type="module" src="{{ url_for('static', path='/firebase-login.js') }}"></script>
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', path='/favicon.ico') }}">
+    </head>
+<body>
+    <div id="leftpanel">
+        <div id="title">
+            <a href="/">
+                <h1>Twitter Clone</h1>
+                <img src="{{ logo_url }}" alt="Logo" style="max-width: 100px;">
+            </a>
+        </div>
+        <div id="follow-box">
+            <ul><br></ul>
+            <ul><br></ul>
+            <h3>Hi there!</h3>
+            <ul>
+                <li>Welcome</li>
+                <li>to</li>
+                <li>Twitter Clone</li>
+            </ul>
+        </div>
+        <div id="logout-box" hidden="true">
+            <button id="sign-out">Sign out {{ user_token.email }}</button>
+        </div>
+    </div>
+    <div id="rightpanel">
+        <h2>Sign Up</h2>
+        <form action="/sign-up" method="POST" id="signup-form">
+            <label for="username">Username:</label>
+            <input id="username-box" type="text" name="username" required><br><br>
+        
+            <label for="sex">Sex: </label>
+            <input type="radio" id="male" name="sex" value="male" required>
+            <label for="male">Male</label>
+            <input type="radio" id="female" name="sex" value="female" required>
+            <label for="female">Female</label><br><br>
+    
+            <label for="birthdate">Birthday:</label>
+            <input id="birthday-button" type="date" name="birthdate" required><br><br>
+    
+            <input id="signup-button" type="submit" value="Sign Up">
+        </form>
+        <div id="username-error" style="color: red; display: none;"><br><br>Username already exists!</div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const existingUsernames = {{ currUsernames | tojson }};
+            const usernameInput = document.getElementById('username-box');
+            const form = document.getElementById('signup-form');
+            const errorMessage = document.getElementById('username-error');
+            const submitButton = document.getElementById('signup-button');
+    
+            usernameInput.addEventListener('input', function() {
+                const username = usernameInput.value.trim();
+                if (existingUsernames.includes(username)) {
+                    errorMessage.style.display = 'block';
+                    submitButton.disabled = true;
+                    submitButton.style.backgroundColor = 'grey';
+                    submitButton.style.cursor = 'not-allowed';
+                } else {
+                    errorMessage.style.display = 'none';
+                    submitButton.disabled = false;
+                    submitButton.style.backgroundColor = '#007aff';
+                    submitButton.style.cursor = 'pointer';
+                }
+            });
+    
+            form.addEventListener('submit', function(event) {
+                const username = usernameInput.value.trim();
+                if (existingUsernames.includes(username)) {
+                    event.preventDefault();
+                    errorMessage.textContent = 'Username already exists!';
+                    errorMessage.style.display = 'block';
+                }
+            });
+        });
+    </script>
+    
+</body>
+</html>

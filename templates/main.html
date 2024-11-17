@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Twitter Clone</title>
+        <link type="text/css" href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet"/>
+        <script type="module" src="{{ url_for('static', path='/firebase-login.js') }}"></script>
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', path='/favicon.ico') }}">
+    </head>
+    <body>
+
+        <div id="leftpanel">
+            
+            <div id="title">
+                <a href="/">
+                    <h1>Twitter Clone</h1>
+                    <img src="{{ logo_url }}" alt="Logo" style="max-width: 100px;">
+                </a>
+            </div>
+
+            <div id="noaccount-box-left">
+                {% if not user_token %}
+                <ul><br></ul>
+                <ul><br></ul>
+                <h3>Hi there!</h3>
+                <ul>
+                    <li>Welcome</li>
+                    <li>to</li>
+                    <li>Twitter Clone</li>
+                </ul>
+                {% endif %}
+            </div>
+
+            <div id="login-box" hidden="true">
+                Email: <input type="email" name="" id="email" placeholder="email"><br/>
+                Password: <input type="password" name="" id="password" placeholder="password"><br/>
+                <div id="hello">
+                <button id="login">Login</button>
+                </div>
+                <button id="sign-up">Sign Up</button>
+            </div>
+
+            <div id="follow-box">
+                {% if user_token %}
+                {% if db_check_2 %}
+                <h3>Followers</h3>
+                {% if user_data_followers %}
+                <ul>
+                    {% for follower in user_data_followers %}
+                        <li><a href="/users/{{ follower }}">{{ follower }}</a></li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p>No followers found</p>
+                {% endif %}
+                <h3>Followees</h3>
+                {% if user_data_following %}
+                <ul>
+                    {% for followee in user_data_following %}
+                        <li><a href="/users/{{ followee }}">{{ followee }}</a></li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p>No Folowees</p>
+                {% endif %}
+                {% endif %}
+                {% endif %}
+            </div>
+
+            <div id="noaccount-box-left">
+                {% if user_token %}
+                {% if not db_check_1 %}
+                <ul><br></ul>
+                <ul><br></ul>
+                <h3>Hi there!</h3>
+                <ul>
+                    <li>Welcome</li>
+                    <li>to</li>
+                    <li>Twitter Clone</li>
+                </ul>
+                {% endif %}
+                {% endif %}
+            </div>
+
+            <div id="logout-box" hidden="true"">
+                <button id="sign-out">Sign out {{ user_token.email }}</button>
+            </div>
+
+        </div>
+        
+        <div id="rightpanel" class="{% if not db_check_1 %} center-content {% endif %}">
+
+            <div id="noaccount-box">
+                {% if user_token %}
+                {% if not db_check_1 %}
+                <form action="/sign-up" method="get">
+                    <button type="submit">Don't have an account? Signup!</button>
+                </form>
+                {% endif %}
+                {% if db_check_1 %}
+                    {% if not db_check_2 %}
+                    <form action="/sign-up" method="get">
+                        <button type="submit">Complete Signing up!</button>
+                    </form>
+                    {% endif %}
+                {% endif %}
+                {% endif %}
+            </div>
+
+            {% if user_token %}
+            {% if db_check_1 %}
+            {% if db_check_2 %}
+
+            <div id="search">
+                <form action="/search" method="post">
+                    <div class="search-container">
+                        <input type="text" name="search" id="search-input" placeholder="Search for a user or a tweet">
+                        <button type="submit">Search</button>
+                    </div>
+                </form>
+            </div>            
+
+        <div id="post-tweet-box">
+            <form action="/post-tweet" method="post" enctype="multipart/form-data">
+                <div id="tweet-box">
+                    <p> Tweeting as <a href="/users/{{ user_data.username }}"> {{user_data.username}} </a> ~ ({{user_token.email}}):</p>
+                    <textarea id="tweet" name="tweet" rows="4" cols="50" placeholder="What's happening?" maxlength="140"></textarea><br/>
+                    <p>Characters Remaining: <span id="char-count">140</span></p>
+                    <input type="file" name="image" accept=".jpg, .png">
+                    <br>
+                    <br>
+                    <button id="tweet-button" type="submit">Tweet</button>
+                    <input type="hidden" name="username" value="{{ user_data.username }}">
+                    <input type="hidden" name="email" value="{{ user_token.email }}">
+                    <input type="hidden" name="date" value="{{ currTimestamp }}">
+                </div>
+            </form>
+        </div>
+
+        <div id="recent-box">
+        {% if tweet_data_mixed %}
+        <ul>
+            {% for tweet in tweet_data_mixed_max_10 %}
+                {% if tweet['blob_url'] != "NONE" %}
+                    <li>
+                        <a href="/users/{{ tweet['username'] }}">{{ tweet['username'] }}</a>
+                        <div id="tweet" class="tweet-container">{{ tweet['tweet'] }} <br><br> <img src="{{ tweet['blob_url'] }}" width="100" height="100"></div>
+                        <form action="/delete-tweet" method="post" style="display: inline;">
+                            <input type="hidden" name="tweet_id" value="{{ tweet['tweet_id'] }}">
+                            {% if tweet['username'] == user_data.username %}
+                            <button id="distruct" type="submit">Delete</button>
+                            {% else %}
+                            <button id="distruct" type="submit" disabled style="background-color: grey; cursor: not-allowed;">Delete</button>
+                            {% endif %}
+                        </form>
+                        <span style="margin-left: 5px;"></span>
+                        <form method="get" action="/edit-tweet/{{ tweet['tweet_id'] }}" style="display: inline;">
+                            {% if tweet['username'] == user_data.username %}
+                            <button id="distruct" type="submit">Edit</button>
+                            {% else %}
+                            <button id="distruct" type="submit" disabled style="background-color: grey; cursor: not-allowed;">Edit</button>
+                            {% endif %}
+                        </form>                        
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="/users/{{ tweet['username'] }}">{{ tweet['username'] }}</a>
+                        <div id="tweet" class="tweet-container">{{ tweet['tweet'] }}</div>
+                        <form action="/delete-tweet" method="post" style="display: inline;">
+                            <input type="hidden" name="tweet_id" value="{{ tweet['tweet_id'] }}">
+                            {% if tweet['username'] == user_data.username %}
+                            <button id="distruct" type="submit">Delete</button>
+                            {% else %}
+                            <button id="distruct" type="submit" disabled style="background-color: grey; cursor: not-allowed;">Delete</button>
+                            {% endif %}
+                        </form>
+                        <span style="margin-left: 5px;"></span>
+                        <form method="get" action="/edit-tweet/{{ tweet['tweet_id'] }}" style="display: inline;">
+                            {% if tweet['username'] == user_data.username %}
+                            <button id="distruct" type="submit">Edit</button>
+                            {% else %}
+                            <button id="distruct" type="submit" disabled style="background-color: grey; cursor: not-allowed;">Edit</button>
+                            {% endif %}
+                        </form> 
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>        
+        {% else %}
+        <p>No tweets found</p>
+        {% endif %}
+    </div>
+
+        {% endif %}
+        {% endif %}
+        {% endif %}
+        </div>
+    </body>
+</html>

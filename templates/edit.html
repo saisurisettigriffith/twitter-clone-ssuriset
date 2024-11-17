@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Tweet</title>
+    <link type="text/css" href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet"/>
+    <script type="module" src="{{ url_for('static', path='/firebase-login.js') }}"></script>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', path='/favicon.ico') }}">
+</head>
+<body>
+    <div id="leftpanel">
+        <div id="title">
+            <a href="/">
+                <h1>Twitter Clone</h1>
+                <img src="{{ logo_url }}" alt="Logo" style="max-width: 100px;">
+            </a>
+        </div>
+        <div id="follow-box">
+            {% if user_token %}
+            <h3>Followers</h3>
+            {% if user_data_followers %}
+            <ul>
+                {% for follower in user_data_followers %}
+                    <li><a href="/users/{{ follower }}">{{ follower }}</a></li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No followers found</p>
+            {% endif %}
+            <h3>Followees</h3>
+            {% if user_data_following %}
+            <ul>
+                {% for followee in user_data_following %}
+                    <li><a href="/users/{{ followee }}">{{ followee }}</a></li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No Folowees</p>
+            {% endif %}
+            {% endif %}
+        </div>
+        <div id="logout-box" hidden="true">
+            <button id="sign-out">Sign out {{ user_token.email }}</button>
+        </div>
+    </div>
+    <div id="rightpanel">
+        <div id="post-tweet-box">
+            <form action="/post-edit-tweet" method="post" enctype="multipart/form-data">
+                <div id="tweet-box">
+                    <textarea id="tweet" name="tweet" rows="4" cols="50" placeholder="What's happening?" maxlength="140">{{ tweet_data.tweet }}</textarea><br/>
+                    <span id="char-count">140</span> Characters Remaining<br/>
+                    {% if tweet_data.blob_url != 'NONE' %}
+                        Current Image: <br/>
+                        <img src="{{ tweet_data.blob_url }}" alt="Current Image" style="max-width: 300px;"><br/>
+                        <label for="image">Change Image:</label>
+                        <input type="file" name="image" accept=".jpg, .png"><br/>
+                        <input type="checkbox" name="delete_image" id="delete_image">
+                        <label for="delete_image">Delete Image</label><br/>
+                    {% else %}
+                        <label for="image">Add Image:</label>
+                        <input type="file" name="image" accept=".jpg, .png"><br/>
+                    {% endif %}
+                    <br>
+                    <br>
+                    <button id="tweet-button" type="submit">Update Tweet</button>
+                    <input type="hidden" name="tweet_id" value="{{ tweet_data.tweet_id }}">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

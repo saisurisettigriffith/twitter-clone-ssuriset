@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <title>Search Page</title>
+        <link type="text/css" href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet"/>
+        <script type="module" src="{{ url_for('static', path='/firebase-login.js') }}"></script>
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', path='/favicon.ico') }}">
+    </head>
+    <body>
+        <div id="leftpanel">
+            <div id="title">
+                <a href="/">
+                    <h1>Twitter Clone</h1>
+                    <img src="{{ logo_url }}" alt="Logo" style="max-width: 100px;">
+                </a>
+            </div>
+            <div id="follow-box">
+                {% if user_token %}
+                <h3>Followers</h3>
+                {% if user_data_followers %}
+                <ul>
+                    {% for follower in user_data_followers %}
+                        <li><a href="/users/{{ follower }}">{{ follower }}</a></li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p>No followers found</p>
+                {% endif %}
+                <h3>Followees</h3>
+                {% if user_data_following %}
+                <ul>
+                    {% for followee in user_data_following %}
+                        <li><a href="/users/{{ followee }}">{{ followee }}</a></li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p>No Folowees</p>
+                {% endif %}
+                {% endif %}
+            </div>
+            <div id="logout-box" hidden="true">
+                <button id="sign-out">Sign out {{ user_token.email }}</button>
+            </div>
+        </div>
+        <div id="rightpanel">
+            <div id="follow-box">
+                {% if filtered_users %}
+                    <h2>Users Found:</h2>
+                    <ul>
+                        {% for user in filtered_users %}
+                            <li>
+                                <a href="/users/{{ user['username'] }}">{{ user['username'] }}</a> {{ user['email'] }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <h2>No Users Found</h2>
+                {% endif %}
+                {% if filtered_tweets %}
+                    <h2>Tweets Found:</h2>
+                    <ul>
+                        {% for tweet in filtered_tweets %}
+                            <li>
+                                <a href="/users/{{ tweet['username'] }}">{{ tweet['username'] }}</a>{{ tweet['tweet'] }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <h2>No Tweets Found</h2>
+                {% endif %}
+            </div>
+        </div>
+    </body>
+</html>

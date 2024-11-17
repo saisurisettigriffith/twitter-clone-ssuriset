@@ -1,0 +1,275 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #333;
+    background-color: #eeeeee;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+    font-size: relative;
+}
+
+#leftpanel, #rightpanel {
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#leftpanel {
+    background-color: #fff;
+    width: 25%;
+    min-width: 240px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #ccc;
+    box-shadow: 1px 0px 0px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+#rightpanel {
+    flex-grow: 1;
+    background-color: #fff;
+    padding-left: 30px;
+    overflow-y: auto;
+}
+
+#title h1 {
+    margin-top: 0;
+    color: #000;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul li a {
+    text-decoration: none;
+    color: #007aff;
+    font-weight: normal;
+    margin-right: auto;
+}
+
+ul li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+
+ul li a, ul li form {
+    flex: 0 0 auto;
+}
+
+.tweet-container {
+    flex: 1 1 auto;
+    text-align: center;
+    margin: 0 10px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+input[type="text"], input[type="email"], input[type="password"], textarea {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 13px;
+    background-color: #f8f8f8;
+}
+
+input[type="file"] {
+    margin-top: 10px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+button {
+    background-color: #007aff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 35px;
+    margin-top: 10px;
+    cursor: pointer;
+    width: auto;
+    font-weight: 600;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#logout-box, #login-box {
+    margin-top: auto;
+    padding: 10px 0;
+    text-align: center;
+}
+
+#logout-box button {
+    background-color: #ff3b30;
+}
+
+#logout-box button:hover {
+    background-color: #c82333;
+}
+
+#search, #tweet-box, #post-tweet-box {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin-bottom: 20px;
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 13px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+#char-count {
+    float: right;
+    color: #555;
+    font-size: 14px;
+}
+
+#recent-box h2 {
+    margin-top: 20px;
+}
+
+form {
+    margin-top: 20px;
+}
+
+#rightpanel.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+#rightpanel.center-content > #noaccount-box {
+    width: 50%;
+    text-align: center;
+    justify-content: center;
+}
+
+.search-container {
+    display: flex;
+    justify-content: start;
+    padding: 10px;
+    background-color: #f8f8f8;
+    border-radius: 13px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+#search-input {
+    flex-grow: 1;
+    margin-right: 8px;
+    border-radius: 13px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+#post-tweet-box {
+    position: relative;
+    padding: 10px;
+    background-color: #f8f8f8;
+    border-radius: 13px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+#tweet-box {
+    position: relative;
+    margin-bottom: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+textarea {
+    width: calc(100% - 24px);
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 13px;
+    background-color: #f8f8f8;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+#tweet-button {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    background-color: #007aff;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 35px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+#tweet-button:hover {
+    background-color: #0056b3;
+}
+
+input[type="file"] {
+    margin-top: 10px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+button[type="submit"] {
+    min-width: 80px;
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+    color: #007aff;
+}
+
+#signup-button {
+    background-color: #007aff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 35px;
+    margin-top: 10px;
+    cursor: pointer;
+    width: auto;
+    font-weight: 600;
+}
+
+#signup-button:hover {
+    background-color: #0056b3;
+}
+
+#username-box {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 35px;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+#birthday-button {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 35px;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+}

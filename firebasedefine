@@ -1,0 +1,9 @@
+const firebaseConfig = {
+  apiKey: "AIzaSyA41CLcmuSbbRl8XFUryRaaz0sWPlvq02o",
+  authDomain: "ssuriset-twitter-clone.firebaseapp.com",
+  projectId: "ssuriset-twitter-clone",
+  storageBucket: "ssuriset-twitter-clone.firebasestorage.app",
+  messagingSenderId: "337714352354",
+  appId: "1:337714352354:web:a48b89e44805b1f8288ebb",
+  measurementId: "G-W5984QYHS5"
+};
